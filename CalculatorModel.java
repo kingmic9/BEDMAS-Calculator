@@ -26,7 +26,7 @@ public class CalculatorModel {
     * Add an operation onto the expression
     * */
     public void AddOp(String op){
-        this.expression += " " + op;
+        this.expression += " " + op + " ";
     }
 
 
@@ -34,7 +34,7 @@ public class CalculatorModel {
     * Add a number onto the expression
     * */
     public void AddNum(String num){
-        this.expression += " " + num;
+        this.expression += num;
     }
 
 

@@ -73,4 +73,35 @@ class CalculatorModelTest {
         x.Evaluate();
         assertEquals("6.0", x.expression);
     }
+
+    @Test
+    void TestTrailingSpaces(){
+        CalculatorModel x = new CalculatorModel();
+        x.SetString("5.27   ");
+        x.Evaluate();
+        assertEquals("5.27", x.expression);
+
+    }
+
+    @Test
+    void BuildNumber(){
+        CalculatorModel x = new CalculatorModel();
+        x.AddNum("5");
+        x.AddNum(".");
+        x.AddNum("2");
+        // Simulate button presses!
+
+        x.Evaluate();
+        assertEquals("5.2", x.expression);
+    }
+
+    @Test
+    void BuildExpression(){
+        CalculatorModel x = new CalculatorModel();
+        x.SetString("5.27");
+        x.AddOp("+");
+        x.AddNum("6");
+        x.Evaluate();
+        assertEquals("11.27", x.expression);
+    }
 }
