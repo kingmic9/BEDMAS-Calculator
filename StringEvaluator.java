@@ -2,8 +2,10 @@ import java.util.*;
 import java.util.Stack;
 
 /*
-* This implementation of the String Evaluator was taken from
+* This implementation of the String Evaluator was based off of
 * https://www.geeksforgeeks.org/how-to-evaluate-math-expression-given-in-string-form-in-java/
+*
+* This implementation adds the functionality of exponents!
 *
 * It does not have any malformed string error checking which breaks the program
 * Therefore, I did have to implement some error catching in the main Calculator Application
@@ -61,7 +63,7 @@ public class StringEvaluator {
                 }
                 else if (tokens[i] == '+' || tokens[i] == '-'
                         || tokens[i] == '*'
-                        || tokens[i] == '/') {
+                        || tokens[i] == '/' || tokens[i] == '^') {
                     // If the character is an operator, pop and
                     // apply operators with higher precedence
                     while (!operators.isEmpty()
@@ -96,6 +98,9 @@ public class StringEvaluator {
         {
             if (operator2 == '(' || operator2 == ')')
                 return false;
+            if (operator1 == '^') {
+                return false;
+            }
             return (operator1 != '*' && operator1 != '/')
                     || (operator2 != '+' && operator2 != '-');
         }
@@ -116,6 +121,7 @@ public class StringEvaluator {
                         throw new ArithmeticException(
                                 "Cannot divide by zero");
                     return a / b;
+                case '^': return Math.pow(a, b);
             }
             return 0;
         }
