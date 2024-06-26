@@ -1,11 +1,11 @@
-import java.util.*;
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 
 public class CalculatorModel {
     // So the idea for this calculator is that the calculator builds a string
     // This string is displayed on the calculator screen, and then can be evaluated through tokenizing
     public String expression;
-
 
     public CalculatorModel(){
         // Right when this model is made, have it set the string expression to a empty string so no expression is
@@ -49,31 +49,16 @@ public class CalculatorModel {
     /*
     * Tokenize the expression and evaluate it, set the string to the result of the calculation
     * */
-    public void Evaluate(){
-
-        if (!(this.expression == "")) {
-            // Then there is something to evaluate
-            FormatExpression();
-            String[] arguments = this.expression.split(" ");
-            // Base Case just one number to evaluate
-            if (arguments.length == 1) {
-                Expr result = new Num(Double.parseDouble(arguments[0]));
-                SetString(Double.toString(result.evaluate()));
-                // This will effectively evaluate something everytime 3 things are typed... i.e. left, operation and right.
-
-                // For two args, nothing needs to happen as the string stays as is
-            } else if (arguments.length == 3) {
-                // Attempt to evaluate expression
-
-                Expr one = new Num(Double.parseDouble(arguments[0]));
-                Expr two = new Num(Double.parseDouble(arguments[2]));
-                BinOp toEval = new BinOp(one, arguments[1] ,two);
-
-                SetString(Double.toString(toEval.evaluate()));
-            }
-
+    public void Evaluate() {
+        // Use the string evaluator to evaluate the expression
+        // Catch appropriate errors!
+        // Handle Gracefully!
+        try {
+        this.expression = Double.toString(StringEvaluator.evaluateExpression(this.expression));
+        } catch (ArithmeticException e) {
+            this.expression = "Error: Division by Zero!";
+        } catch (EmptyStackException e) {
+            this.expression = "Error: Unpaired Operand!";
         }
-
-
     }
 }
