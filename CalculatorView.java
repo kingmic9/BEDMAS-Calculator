@@ -108,6 +108,12 @@ public class CalculatorView {
                             // To remove both
                             this.calculatorModel.expression = this.calculatorModel.expression.substring(0, index);
                         }
+
+                        if (this.calculatorModel.expression == "Infinity") {
+                            this.calculatorModel.expression = "Error: Too Big!";
+                        } else if (this.calculatorModel.expression == "-Infinity") {
+                            this.calculatorModel.expression = "Error: Too Small!";
+                        }
                         text.setText(this.calculatorModel.expression);
                     });
                     break;
@@ -134,7 +140,7 @@ public class CalculatorView {
         lastPanel.add(clear, BorderLayout.WEST);
 
         // Create the back-button
-        JButton back = new JButton("<=");
+        JButton back = new JButton("←");
         back.setFont(new Font("Arial", Font.PLAIN, 25));
         back.setFocusable(false);
         back.setPreferredSize(new Dimension(70, 70));

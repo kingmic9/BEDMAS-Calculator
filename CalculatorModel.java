@@ -39,14 +39,6 @@ public class CalculatorModel {
 
 
     /*
-    * Strip away any leading or trailing spaces before attempting to evaluate the string
-    * */
-    public void FormatExpression(){
-        this.expression = this.expression.strip();
-    }
-
-
-    /*
     * Tokenize the expression and evaluate it, set the string to the result of the calculation
     * */
     public void Evaluate() {
@@ -58,7 +50,7 @@ public class CalculatorModel {
         } catch (ArithmeticException e) {
             this.expression = "Error: Division by Zero!";
         } catch (EmptyStackException e) {
-            this.expression = "Error: Unpaired Operand!";
+            this.expression = "Error: Invalid Input!";
         }
     }
 }
