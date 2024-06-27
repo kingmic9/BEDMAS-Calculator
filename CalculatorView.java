@@ -13,7 +13,7 @@ public class CalculatorView {
     public CalculatorView(CalculatorModel calculatorModel){
         this.calculatorModel = calculatorModel;
         // Set up the frame and name it
-        JFrame frame = new JFrame("Calculator");
+        JFrame frame = new JFrame("BEDMAS Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
