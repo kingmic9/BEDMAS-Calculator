@@ -18,14 +18,15 @@ public class CalculatorView {
         frame.setResizable(false);
 
         // Set up the background
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         panel.setBackground(Color.blue);
 
         // Set up the text field
-        JTextField text = new JTextField(17);
+        JTextField text = new JTextField(12);
 
         // Set font size
-        Font font = new Font("Arial", Font.PLAIN, 25); // Adjust the font size (20) as needed
+        Font font = new Font("Arial", Font.PLAIN, 36); // Adjust the font size (20) as needed
         text.setFont(font);
 
         // Make it immutable
@@ -48,7 +49,7 @@ public class CalculatorView {
 
         String[] symbols = {"7", "8", "9", "*", "(",
                             "4", "5", "6", "/", ")",
-                            "1", "2", "3", "―", "^",
+                            "1", "2", "3", "–", "^",
                             "+/-", "0", ".", "+", "="};
 
         for (String symbol : symbols) {
@@ -90,7 +91,7 @@ public class CalculatorView {
                 case "*":
                 case "/":
                 case "+":
-                case "―":
+                case "–":
                 case "^":
                     button.addActionListener(e -> {
                         this.calculatorModel.AddOp(symbol);
@@ -100,6 +101,13 @@ public class CalculatorView {
                 case "=":
                     button.addActionListener(e -> {
                         this.calculatorModel.Evaluate();
+
+                        // If not needed to be a decimal value, keep it as an int
+                        if (this.calculatorModel.expression.endsWith(".0")) {
+                            int index = this.calculatorModel.expression.length() - 2;
+                            // To remove both
+                            this.calculatorModel.expression = this.calculatorModel.expression.substring(0, index);
+                        }
                         text.setText(this.calculatorModel.expression);
                     });
                     break;
@@ -111,9 +119,8 @@ public class CalculatorView {
             gridPanel.add(button);
         }
 
-        // Make a seperate button grid for clearing and backspace.
-        GridLayout clearing = new GridLayout(1, 2, 5, 5);
-        JPanel lastPanel = new JPanel(clearing);
+        // Make a separate button grid for clearing and backspace.
+        JPanel lastPanel = new JPanel(new GridLayout(1, 2, 5, 5));
         lastPanel.setBackground(Color.BLUE);
 
         // Put in the clear and backspace buttons.
@@ -121,30 +128,45 @@ public class CalculatorView {
         clear.setFont(new Font("Arial", Font.PLAIN, 25));
         clear.setFocusable(false);
         clear.setPreferredSize(new Dimension(70, 70));
-        clear.setAlignmentX(Component.RIGHT_ALIGNMENT); // Center-align buttons
+        clear.setAlignmentX(Component.RIGHT_ALIGNMENT); // align buttons
         clear.addActionListener(e -> {this.calculatorModel.SetString("");
             text.setText(this.calculatorModel.expression);});
-        lastPanel.add(clear);
+        lastPanel.add(clear, BorderLayout.WEST);
 
+        // Create the back-button
         JButton back = new JButton("<=");
         back.setFont(new Font("Arial", Font.PLAIN, 25));
         back.setFocusable(false);
         back.setPreferredSize(new Dimension(70, 70));
-        back.setAlignmentX(Component.RIGHT_ALIGNMENT); // Center-align buttons
-        back.addActionListener(e -> {this.calculatorModel.SetString("");
+        back.setAlignmentX(Component.RIGHT_ALIGNMENT); // align buttons
+        back.addActionListener(e -> {
+            // If the string is empty, do nothing
+            if (this.calculatorModel.expression == ""){return;}
+
+            // Figure out what is the last index in the string and pull that value.
+            // The index of the last item will be length of the string - 1.
+            // Pull that last item, check how many things to delete
+            int lastIndex = this.calculatorModel.expression.length() - 1;
+            char lastItem = this.calculatorModel.expression.charAt(lastIndex);
+            if (lastItem == ' ') {
+                // Remove the last 3 chars as it is something like ' + '
+                this.calculatorModel.SetString(this.calculatorModel.expression.substring(0, lastIndex - 2));
+                // End index is excluded.
+            } else {
+                // Just remove the last element
+                this.calculatorModel.SetString(this.calculatorModel.expression.substring(0, lastIndex));}
+            // Update the textfield in both cases.
             text.setText(this.calculatorModel.expression);});
-        lastPanel.add(back);
 
-        panel.add(lastPanel, BorderLayout.EAST);
+        lastPanel.add(back, BorderLayout.WEST);
 
-
-
+        // Add both sets of buttons to the text box
+        panel.add(lastPanel, BorderLayout.WEST);
         panel.add(gridPanel);
 
-
-
+        // Configure and add everything to the frame
         frame.add(panel, BorderLayout.CENTER);
-        frame.setMinimumSize(new Dimension(400, 500));
+        frame.setMinimumSize(new Dimension(397, 468));
         frame.setVisible(true);
     }
 

@@ -7,9 +7,9 @@ import java.util.Stack;
 *
 * My implementation adds the functionality of exponents!
 * My implementation also adds the support for negative numbers. I.e. -12.0 if attempted to evaluate would crash
-* My implementation uses the - and ― to differentiate between part of a number like -12 vs. operation (needing two operands)
+* My implementation uses the - and – to differentiate between part of a number like -12 vs. operation (needing two operands)
 *
-* It does not have any malformed string error checking which breaks the program
+* It does not have any malformed string error checking which breaks the String Evaluator, throwing a NullStackException
 * Therefore, I did have to implement some error catching in the main Calculator Application
 * */
 
@@ -63,7 +63,7 @@ public class StringEvaluator {
                     }
                     operators.pop(); // Pop the '('
                 }
-                else if (tokens[i] == '+' || tokens[i] == '―'
+                else if (tokens[i] == '+' || tokens[i] == '–'
                         || tokens[i] == '*'
                         || tokens[i] == '/' || tokens[i] == '^') {
                     // If the character is an operator, pop and
@@ -104,7 +104,7 @@ public class StringEvaluator {
                 return false;
             }
             return (operator1 != '*' && operator1 != '/')
-                    || (operator2 != '+' && operator2 != '―');
+                    || (operator2 != '+' && operator2 != '–');
         }
 
         // Function to apply the operator to two operands
@@ -114,7 +114,7 @@ public class StringEvaluator {
             switch (operator) {
                 case '+':
                     return a + b;
-                case '―':
+                case '–':
                     return a - b;
                 case '*':
                     return a * b;
