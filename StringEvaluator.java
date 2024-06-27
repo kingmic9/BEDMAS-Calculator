@@ -28,13 +28,13 @@ public class StringEvaluator {
 
                 // If the character is a digit or a decimal
                 // point, parse the number
-                if ((tokens[i] >= '0' && tokens[i] <= '9')
-                        || tokens[i] == '.') {
+                if ((tokens[i] == '-' || tokens[i] >= '0' && tokens[i] <= '9')
+                        || tokens[i] == '.' ) {
                     StringBuilder sb = new StringBuilder();
                     // Continue collecting digits and the
                     // decimal point to form a number
                     while (i < tokens.length
-                            && (Character.isDigit(tokens[i])
+                            && (Character.isDigit(tokens[i]) || (tokens[i] == '-')
                             || tokens[i] == '.')) {
                         sb.append(tokens[i]);
                         i++;
@@ -61,7 +61,7 @@ public class StringEvaluator {
                     }
                     operators.pop(); // Pop the '('
                 }
-                else if (tokens[i] == '+' || tokens[i] == '-'
+                else if (tokens[i] == '+' || tokens[i] == '―'
                         || tokens[i] == '*'
                         || tokens[i] == '/' || tokens[i] == '^') {
                     // If the character is an operator, pop and
@@ -102,7 +102,7 @@ public class StringEvaluator {
                 return false;
             }
             return (operator1 != '*' && operator1 != '/')
-                    || (operator2 != '+' && operator2 != '-');
+                    || (operator2 != '+' && operator2 != '―');
         }
 
         // Function to apply the operator to two operands
@@ -112,7 +112,7 @@ public class StringEvaluator {
             switch (operator) {
                 case '+':
                     return a + b;
-                case '-':
+                case '―':
                     return a - b;
                 case '*':
                     return a * b;
