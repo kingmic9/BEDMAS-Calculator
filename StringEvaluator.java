@@ -2,10 +2,12 @@ import java.util.*;
 import java.util.Stack;
 
 /*
-* This implementation of the String Evaluator was based off of
+* This implementation of the String Evaluator was inspired by
 * https://www.geeksforgeeks.org/how-to-evaluate-math-expression-given-in-string-form-in-java/
 *
-* This implementation adds the functionality of exponents!
+* My implementation adds the functionality of exponents!
+* My implementation also adds the support for negative numbers. I.e. -12.0 if attempted to evaluate would crash
+* My implementation uses the - and ― to differentiate between part of a number like -12 vs. operation (needing two operands)
 *
 * It does not have any malformed string error checking which breaks the program
 * Therefore, I did have to implement some error catching in the main Calculator Application
