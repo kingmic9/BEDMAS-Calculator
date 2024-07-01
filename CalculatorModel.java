@@ -46,7 +46,7 @@ public class CalculatorModel {
         // Catch appropriate errors!
         // Handle Gracefully!
         try {
-        this.expression = Double.toString(StringEvaluator.evaluateExpression(this.expression));
+        this.expression = (StringEvaluator.evaluateExpression(this.expression)).toString();
         } catch (ArithmeticException e) {
             this.expression = "Error: Division by Zero!";
         } catch (EmptyStackException e) {

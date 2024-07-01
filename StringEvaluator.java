@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.Stack;
 
@@ -16,11 +18,11 @@ import java.util.Stack;
 public class StringEvaluator {
         // Functions to evaluate a mathematical expression using 'BEDMAS' given
         // in string form
-        public static double evaluateExpression(String expression) {
+        public static BigDecimal evaluateExpression(String expression) {
             char[] tokens = expression.toCharArray();
 
             // Stacks to store operands and operators
-            Stack<Double> values = new Stack<>();
+            Stack<BigDecimal> values = new Stack<>();
             Stack<Character> operators = new Stack<>();
 
             // Iterate through each character in the expression
@@ -43,8 +45,8 @@ public class StringEvaluator {
                     }
                     // Parse the collected number and push it to
                     // the values stack
-                    values.push(
-                            Double.parseDouble(sb.toString()));
+                    values.push(new BigDecimal(sb.toString())
+                            );
                     i--; // Decrement i to account for the extra
                     // increment in the loop
                 }
@@ -108,23 +110,23 @@ public class StringEvaluator {
         }
 
         // Function to apply the operator to two operands
-        private static double applyOperator(char operator,
-                                            double b, double a)
+        private static BigDecimal applyOperator(char operator,
+                                            BigDecimal b, BigDecimal a)
         {
             switch (operator) {
                 case '+':
-                    return a + b;
+                    return a.add(b);
                 case '–':
-                    return a - b;
+                    return a.subtract(b);
                 case '*':
-                    return a * b;
+                    return a.multiply(b);
                 case '/':
-                    if (b == 0)
+                    if (b.equals(new BigDecimal(0)))
                         throw new ArithmeticException(
                                 "Cannot divide by zero");
-                    return a / b;
-                case '^': return Math.pow(a, b);
+                    return a.divide(b, 15, RoundingMode.HALF_EVEN);
+                case '^': return a.pow(b.intValue());
             }
-            return 0;
+            return new BigDecimal(0);
         }
 }
