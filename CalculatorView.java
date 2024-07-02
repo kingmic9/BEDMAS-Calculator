@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 public class CalculatorView {
     CalculatorModel calculatorModel;
@@ -102,13 +103,14 @@ public class CalculatorView {
                     button.addActionListener(e -> {
                         this.calculatorModel.Evaluate();
 
-                        // If not needed to be a decimal value, keep it as an int
-                        if (this.calculatorModel.expression.endsWith(".0")) {
-                            int index = this.calculatorModel.expression.length() - 2;
-                            // To remove both
-                            this.calculatorModel.expression = this.calculatorModel.expression.substring(0, index);
+                        // Deal with values that are too big / small for the calculator to display
+                        if (new BigDecimal(this.calculatorModel.expression).compareTo(new BigDecimal(999999999)) == 1){
+                            this.calculatorModel.SetString("Error: Too Big");
+                        } else if (new BigDecimal(this.calculatorModel.expression).compareTo(new BigDecimal(-999999999)) == -1) {
+                            this.calculatorModel.SetString("Error: Too Small");
                         }
 
+                        // Previous error checking for double arithmetic from string evaluator
                         if (this.calculatorModel.expression == "Infinity") {
                             this.calculatorModel.expression = "Error: Too Big!";
                         } else if (this.calculatorModel.expression == "-Infinity") {
