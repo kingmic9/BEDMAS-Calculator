@@ -8,7 +8,7 @@ public class CalculatorModel {
     public String expression;
 
     public CalculatorModel(){
-        // Right when this model is made, have it set the string expression to a empty string so no expression is
+        // Right when this model is made, have it set the string expression to an empty string so no expression is
         // displayed.
         this.expression = "";
     }
@@ -51,6 +51,8 @@ public class CalculatorModel {
             this.expression = "Error: Division by Zero!";
         } catch (EmptyStackException e) {
             this.expression = "Error: Invalid Input!";
+        } catch (NumberFormatException e) {
+            this.expression = "Error: Invalid Number!";
         }
     }
 }
